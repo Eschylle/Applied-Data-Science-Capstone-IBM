@@ -15,7 +15,7 @@ import plotly.express as px
 # from js import fetch
 # import io
 
-url =  "https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBM-DS0321EN-SkillsNetwork/datasets/spacex_launch_dash.csv" 
+url = "https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBM-DS0321EN-SkillsNetwork/datasets/spacex_launch_dash.csv" 
 # resp = await fetch(url)
 # spacex_csv_file = io.BytesIO((await resp.arrayBuffer()).to_py())
 
@@ -58,6 +58,7 @@ app.layout = html.Div(children=[html.H1('SpaceX Launch Records Dashboard',
                                                 min=0, max=10000, step=1000,
                                                 marks={0: '0 kg', 10000: '10000 kg'},
                                                 value=[min_payload, max_payload]),
+                                html.Br(),
 
                                 # TASK 4: Add a scatter chart to show the correlation between payload and launch success
                                 html.Div(dcc.Graph(id='success-payload-scatter-chart')),
@@ -77,7 +78,7 @@ def pie_chart(value):
     else:
         filtered_df = spacex_df[spacex_df['Launch Site'] == value].groupby(['Launch Site', 'class']). \
         size().reset_index(name='class count')
-        title = 'Total Success Launches for site {value}'
+        title = 'Total Success Launches for site ' + value
         fig = px.pie(filtered_df,values='class count', names='class', title=title)
         return fig
 
@@ -98,8 +99,10 @@ def scatter_chart(entered_site, slider_range):
     else:
         filtered_df2= filtered_df1[filtered_df1['Launch Site'] == entered_site]
         fig = px.scatter(filtered_df2, x='Payload Mass (kg)', y='class', color='Booster Version Category',
-        title='Correlation between Payload and Successf for site {entered_site}')
+        title='Correlation between Payload and Successf for site ' + entered_site)
         return fig
+    
 # Run the app
 if __name__ == '__main__':
     app.run_server(port = 8050, debug=True)
+# You can use the url:  http://127.0.0.1:8050/
