@@ -94,12 +94,12 @@ def scatter_chart(entered_site, slider_range):
     filtered_df1 = spacex_df[mask]
     if entered_site =='ALL':
         fig = px.scatter(filtered_df1, x='Payload Mass (kg)', y='class', color='Booster Version Category',
-        title='Correlation between Payload and Success for All Sites')
+        title='Correlation between Payload mass and Success for All Sites')
         return fig
     else:
         filtered_df2= filtered_df1[filtered_df1['Launch Site'] == entered_site]
         fig = px.scatter(filtered_df2, x='Payload Mass (kg)', y='class', color='Booster Version Category',
-        title='Correlation between Payload and Successf for site ' + entered_site)
+        title='Correlation between Payload mass and Successf for site ' + entered_site)
         return fig
     
 # Run the app
